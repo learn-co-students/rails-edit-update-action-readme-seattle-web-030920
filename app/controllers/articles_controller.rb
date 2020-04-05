@@ -20,4 +20,16 @@ class ArticlesController < ApplicationController
   end
 
   # add edit and update methods here
+  def edit
+    @article = Article.find(params[:id])    
+  end
+
+  def update
+    #raise params.inspect
+    @article = Article.find(params[:id])
+    diff_hash = Hash[*(params[:article].to_a - @article.to_h.to_a).flatten(1)]
+    @article.update(diff_hash)
+    redirect_to article_path(@article)
+  end
+
 end
